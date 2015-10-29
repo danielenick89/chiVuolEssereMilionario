@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/style.css" type="text/css" />
+    </head>
+    <body>
+        <div class="sigla-overlay"></div>
+        <div class="main-container">mainContainer</div>
+        <div class="questions-overlay">questions</div>
+        <div class="recap-panel">recap</div>
+        <script src="js/millionaire.js"></script>
+        <script>
+            
+            var s = document.getElementsByClassName('sigla-overlay')[0]
+            var m = document.getElementsByClassName('main-container')[0]
+            var q = document.getElementsByClassName('questions-overlay')[0]
+            var r = document.getElementsByClassName('recap-panel')[0]
+            
+            
+            Millionaire.init(m,r,q,s);
+            
+            Millionaire.next();
+        </script>
+    </body>
+</html>
