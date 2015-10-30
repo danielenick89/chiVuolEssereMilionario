@@ -7,7 +7,7 @@
 
 var Millionaire = (function() {
     
-    var main,recap,question,sigla,qdm;
+    var main,recap,question,sigla,logo,qdm;
     
     var SoundManager = (function() {
         
@@ -116,6 +116,7 @@ var Millionaire = (function() {
         var toggleCamera = function() {
             cameraEnabled = ! cameraEnabled;
             video.style.display = cameraEnabled ? '' : 'none';
+            return cameraEnabled;
         }
         
         loadCamera();
@@ -132,7 +133,7 @@ var Millionaire = (function() {
     var QuestionManager = function(container) {
         
         
-        var higlighted = null;
+        var highlighted = -1;
         var showIndex = 0;
         var question = null;
         
@@ -168,6 +169,10 @@ var Millionaire = (function() {
                 ac.className += " highlighted";
             }
             
+            var deHighlight = function() {
+                ac.className = ac.className.replace("highlighted","");
+            }
+            
             var right = function() {
                 ac.className = ac.className.replace("highlighted","correct");
             }
@@ -186,7 +191,8 @@ var Millionaire = (function() {
                 highlight:highlight,
                 wrong:wrong,
                 right:right,
-                reset:reset
+                reset:reset,
+                deHighlight:deHighlight
             };
         }
         
@@ -199,7 +205,7 @@ var Millionaire = (function() {
                 answerBoxes[i].reset();
             }
             
-            higlighted = 0;
+            highlighted = -1;
             showIndex = 0;
         }
         
@@ -216,17 +222,23 @@ var Millionaire = (function() {
         }
         
         var accendi = function(i) {
-            higlighted = i;
-            answerBoxes[i].highlight();
-            SoundManager.play('accendiamo',function() {
-                SoundManager.loop('waiting');
-            });
+            if(highlighted == i) {
+                highlighted = -1;
+                answerBoxes[i].deHighlight();
+                SoundManager.loop('background');
+            } else {
+                highlighted = i;
+                answerBoxes[i].highlight();
+                SoundManager.play('accendiamo',function() {
+                    SoundManager.loop('waiting');
+                });
+            }
         }
         
         
         var wrong = function() {
-            if(higlighted != null) {
-                answerBoxes[higlighted].wrong();
+            if(highlighted != null) {
+                answerBoxes[highlighted].wrong();
                 SoundManager.play('wrong',function() {
                     SoundManager.loop('background');
                 });
@@ -234,8 +246,8 @@ var Millionaire = (function() {
         }
         
         var right = function(callback) {
-            if(higlighted != null) {
-                answerBoxes[higlighted].right();
+            if(highlighted != null) {
+                answerBoxes[highlighted].right();
                 SoundManager.play('correct',callback);
             }
         }
@@ -274,15 +286,29 @@ var Millionaire = (function() {
         return {};
     }
     
+    var LogoManager  = function(container) {
+        
+        var show = function() {
+            container.style.display = '';
+        }
+        
+        var hide = function() {
+            container.style.display = 'none';
+        }
+        
+        hide();
+        
+        return {
+            show:show,
+            hide:hide
+        }
+    }
+    
     var GameManager = function() {
         
     }
     
-    var QuestionsDataManager  = function() {
-        var questions = [
-            {question: "Chi era il primo ministro italiano nel lontano 1994?", options: ["Silvio","Berlusconi","Silvio Berlusconi","Il Cavaliere"]},
-            {question: "Chi è stato il capocannoniere dei mondiali 1990?", options: ["Roberto Baggio","Giovanni Trapattoni","Rudi Voeller","Toto' Schillaci"]}
-        ];
+    var QuestionsDataManager  = function(questions) {
         
         var current = -1;
         
@@ -324,13 +350,15 @@ var Millionaire = (function() {
     
     
     
-    var init = function(mainContainer, recapContainer, questionContainer, siglaContainer) {
+    var init = function(questions, mainContainer, recapContainer, questionContainer, siglaContainer, logoContainer) {
+        
         main = MainManager(mainContainer);
         recap = RecapManager(recapContainer);
         question = QuestionManager(questionContainer);
         sigla = SiglaManager(siglaContainer);
+        logo = LogoManager(logoContainer);
         
-        qdm = QuestionsDataManager();
+        qdm = QuestionsDataManager(questions);
     }
     
     var standBy = false;
@@ -372,7 +400,8 @@ var Millionaire = (function() {
     }
     
     var toggleCamera = function() {
-        main.toggleCamera();
+        main.toggleCamera() ? logo.show() : logo.hide();
+        
     }
     
     var keyDispatcher = function(e) {

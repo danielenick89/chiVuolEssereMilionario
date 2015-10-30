@@ -31,6 +31,13 @@ and open the template in the editor.
     background-position: center center;
 }
 
+.logo{
+    position:fixed;
+    right:20px;
+    top: 20px;
+    width: 10%;
+}
+
 .recap-panel{
     position:fixed;
     top:0%;
@@ -76,7 +83,7 @@ video.camera{
     color: white;
     font-weight: bold;
     
-    font-size: 30px;
+    font-size: 35px;
     padding :10px;
     text-align: center;
 }
@@ -110,7 +117,7 @@ video.camera{
     color: white;
     font-weight: bold;
     
-    font-size: 30px;
+    font-size: 35px;
     padding :10px;
     padding-left: 90px;
     text-align: left;
