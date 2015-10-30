@@ -50,7 +50,9 @@ var Millionaire = (function() {
         };
     })();
     
-    var MainManager = function(container) {
+    var MainManager = function(container,logoManager) {
+        
+        var FLASH_INTERVAL = 150;
         
         var getLastVideoSourceId = function(callback) {
             MediaStreamTrack.getSources(function(sourceInfos) {
@@ -116,13 +118,33 @@ var Millionaire = (function() {
         var toggleCamera = function() {
             cameraEnabled = ! cameraEnabled;
             video.style.display = cameraEnabled ? '' : 'none';
+            if(cameraEnabled) {
+                logoManager.show()
+            } else {
+                logoManager.hide()
+            }
             return cameraEnabled;
+        }
+        
+        var flashId = -1;
+        
+        var flashCamera = function() {
+            if(flashId == -1) {
+                flashId = setInterval(toggleCamera,FLASH_INTERVAL);
+            } else {
+                clearInterval(flashId);
+                if(!cameraEnabled) { //always ends in camera Enabled
+                    toggleCamera();
+                }
+                flashId = -1;
+            }
         }
         
         loadCamera();
         
         return {
-            toggleCamera: toggleCamera
+            toggleCamera: toggleCamera,
+            flashCamera:flashCamera
         };
     }
     
@@ -352,11 +374,11 @@ var Millionaire = (function() {
     
     var init = function(questions, mainContainer, recapContainer, questionContainer, siglaContainer, logoContainer) {
         
-        main = MainManager(mainContainer);
+        logo = LogoManager(logoContainer);
+        main = MainManager(mainContainer,logo);
         recap = RecapManager(recapContainer);
         question = QuestionManager(questionContainer);
         sigla = SiglaManager(siglaContainer);
-        logo = LogoManager(logoContainer);
         
         qdm = QuestionsDataManager(questions);
     }
@@ -399,11 +421,6 @@ var Millionaire = (function() {
         question.showNext();
     }
     
-    var toggleCamera = function() {
-        main.toggleCamera() ? logo.show() : logo.hide();
-        
-    }
-    
     var keyDispatcher = function(e) {
         console.log(e.which);
         
@@ -420,7 +437,9 @@ var Millionaire = (function() {
             
             case 40: showNext(); break; //freccia giù
                 
-            case 70: toggleCamera(); break; //f
+            case 70: main.toggleCamera(); break; //f
+            
+            case 80: main.flashCamera(); break; //p
         }
         
     }
