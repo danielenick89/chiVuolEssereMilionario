@@ -21,7 +21,8 @@ var Millionaire = (function() {
             "waiting": "sounds/waiting.mp3",
             "wins": "sounds/wins_everything.mp3",
             "dio": "sounds/dio_benedica.mp3",
-            "standby":"sounds/standby.mp3"
+            "standby":"sounds/standby.mp3",
+            "intro":"sounds/intro.mp3"
         };
         
         var audio = new Audio();
@@ -105,7 +106,6 @@ var Millionaire = (function() {
                         video.oncanplay;
                     }, function(err) {
                         console.log("err: " + err);
-                        
                     });
                 });
             } else {
@@ -305,7 +305,34 @@ var Millionaire = (function() {
     }
     
     var SiglaManager = function(container) {
-        return {};
+        var video = document.createElement('video');
+        
+        video.className = 'camera';
+        
+        container.appendChild(video);
+        
+        var show = function() {
+            container.style.display = 'auto';
+        }
+        
+        var hide = function() {
+            container.style.display = 'none';
+        }
+        
+        var intro = function(callback) {
+            show();
+            video.onended = function() {
+                hide();
+                callback();
+            }
+            video.src = 'video/intro.mp4';
+            video.play()
+            
+        }
+        
+        return {
+            intro:intro
+        };
     }
     
     var LogoManager  = function(container) {
@@ -384,7 +411,16 @@ var Millionaire = (function() {
     }
     
     var standBy = false;
+    var firstStart = true;
     var next = function() {
+        if(firstStart) {
+            firstStart = false;
+            start();
+            question.hide();
+            return;
+        }
+        
+        
         question.hide();
         if(qdm.isLastQuestion()) {
             SoundManager.play('wins',function() {
@@ -419,6 +455,12 @@ var Millionaire = (function() {
     
     var showNext = function() {
         question.showNext();
+    }
+    
+    var start = function() {
+        sigla.intro(function() {
+            next();
+        });
     }
     
     var keyDispatcher = function(e) {
