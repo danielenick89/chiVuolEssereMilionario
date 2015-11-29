@@ -344,7 +344,7 @@ var Millionaire = (function() {
         container.appendChild(video);
         
         var show = function() {
-            container.style.display = 'auto';
+            container.style.display = '';
         }
         
         var hide = function() {
@@ -355,15 +355,27 @@ var Millionaire = (function() {
             show();
             video.onended = function() {
                 hide();
-                callback();
+                callback && callback();
             }
             video.src = 'video/intro.mp4';
             video.play()
             
         }
         
+        var outro = function(callback) {
+            show();
+            video.onended = function() {
+                hide();
+                callback && callback();
+            }
+            video.src = 'video/outro.mp4';
+            video.play()
+            
+        }
+        
         return {
             intro:intro,
+            outro:outro,
             hide:hide
         };
     }
@@ -461,7 +473,9 @@ var Millionaire = (function() {
         question.hide();
         if(qdm.isLastQuestion()) {
             SoundManager.play('wins',function() {
-                SoundManager.loop('dio');
+                SoundManager.play('dio',function() {
+                    sigla.outro();
+                });
             });
             return;
         }
