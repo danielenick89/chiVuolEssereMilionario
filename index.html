@@ -15,6 +15,7 @@ and open the template in the editor.
         <div class="sigla-overlay">Ambrosino pane e vino</div>
         <div class="main-container">mainContainer</div>
         <div class="questions-overlay">questions</div>
+        <div class="image-overlay"><img src="" id="questionImage" /></div>
         <div class="recap-panel">recap</div>
         <img class="logo" src="img/logo.png"/>
         <script src="js/millionaire.js"></script>
@@ -27,16 +28,24 @@ and open the template in the editor.
             var l = document.getElementsByClassName('logo')[0]
             
             var questions = [
-                {question: "Chi era il primo ministro italiano nel lontano 1994?", options: ["Silvio","Berlusconi","Silvio Berlusconi","Il Cavaliere"]},
+                {question: "Chi era il primo ministro italiano nel lontano 1994?", options: ["Silvio","Berlusconi","Silvio Berlusconi Berlusconi Berlusconi Berlusconi Berlusconi","Il Cavaliere"],image:"img/logo.png"},
                 {question: "Chi è stato il capocannoniere dei mondiali 1990?", options: ["Roberto Baggio","Giovanni Trapattoni","Rudi Voeller","Toto' Schillaci"]},
+                {question: "Qual è lo sport preferito dei graesani?", options: ["Pokemon ul gameboy","Rapporti incestuosi","Pellegrinaggio a Barbana","Giocare a bocce in palù"],image:"img/av1.png"},
                 {question: "Chi è stato l'ultimo giocatore a segnare con il numero 10 del Napoli?", options: ["Maradona","Floro Flores","Igor Protti","Il Pampa Sosa"]},
+                {question: "Un ciclista scala una montagna alla media 20 km/h. Giunto in cima riscende a valle a una media di 60 km/h. Qual è la media della velocità del ciclista?", options: ["40 km/h","30 km/h","45 km/h","Nessuna delle precedenti"]},
+                {question: "Come si dice orologio in bisiaco? (dato che sei cabibbo)", options: ["Orloloi","Orloi","Roloi","Oriol"]},
                 {question: "Chi fu il capocannoniere della serie A dell'anno 1986?", options: ["Platini","Maradona","Aldo Serena","Roberto Pruzzo"]},
                 {question: "Quanto dista la luna dalla terra?", options: ["384.403 km","40.075 km","567.387 km","185.933 km"]},
-                {question: "Come si dice orologio in bisiaco? (dato che sei cabibbo)", options: ["Orloloi","Orloi","Roloi","Oriol"]},
                 {question: "Se moltiplico tra di loro tutti i numeri del cellulare, che numero ottengo?", options: ["45","1248040","362880","0"]},
                 {question: "Qual è il tuo tasso alcolemico in questo momento?", options: ["Tanto","0.4","1.5","Stago mal"]},
                 {question: "Chi è, dentro il tuo cuore, il tuo vero Dio?", options: ["Jah","Geova","Dio","Morgan Freeman"]},
-                {question: "Quale delle seguenti cose preferisci?", options: ["La figa","Un ciccio","Melanzane sott'olio","Far schemi"]}
+                {question: "Quanti campionati hai vinto nella tua carriera?", options: ["2","1","0","3 su PES"]},
+                {question: "Che animale è rapresentato al centro della bandiera dell'Uganda?", options: ["Un coccodrillo","Un gorilla","Una gru","Non è rappresentato nessun animale"]},
+                {question: "Cosa significa 'maukas voileina' in finlandese?", options: ["Dio è grande","Trapanatore di culi","Melanzane impanade","Panino gustoso"]},
+                {question: "Quale tra queste punizioni preferisci?", options: ["Smutandata","Leccata di ascella pelosa","Il tunnel del dolore","La Prunizione"]},
+                {question: "Qual è il tuo drink preferito?", options: ["Birra","Vino","Jack cola","Lo shottino misterioso"]},
+                {question: "Quando ti arrabbi qual è la prima cosa a cui pensi?", options: ["Devo bere","Ndeme via","Sbrego una bici","Porco dio"]},
+                {question: "Quale delle seguenti cose preferisci?", options: ["La figa","Un ciccio","Melanzane sott'olio","Far schemi"]},
             ];
             
             Millionaire.init(questions,m,r,q,s,l);

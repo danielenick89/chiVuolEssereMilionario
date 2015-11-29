@@ -77,7 +77,7 @@ var Millionaire = (function() {
                 //bypass to be removed
                 var videoSources = sourceInfos.filter(function(e) { return e.kind == 'video'; } );
 
-                callback(videoSources[0].id);
+                callback(videoSources[1].id);
             });
         }
         
@@ -177,6 +177,29 @@ var Millionaire = (function() {
             };
         };
         
+        var ImageBox = function() {
+            
+            var image = document.getElementById('questionImage');
+            
+            var setImage = function(src) {
+                image.src = src;
+            }
+            
+            var hide = function() {
+                image.style.display = 'none';
+            }
+            
+            var show = function() {
+                image.style.display = '';
+            }
+            
+            return {
+                setImage:setImage,
+                hide:hide,
+                show:show
+            };
+        };
+        
         var AnswerBox = function(index) {
             var answerLabel  = ["A","B", "C", "D"];
             var ac = document.createElement('div');
@@ -235,6 +258,11 @@ var Millionaire = (function() {
             reset();
             question = q;
             questionBox.setQuestionText(question.question);
+            if(q.image) {
+                imageBox.setImage(q.image);
+            } else {
+                imageBox.hide();
+            }
         }
         
         var showNext = function() {
@@ -276,16 +304,20 @@ var Millionaire = (function() {
         
         var show = function() {
             container.style.display = '';
+            imageBox.show();
         }
         
         var hide = function() {
             container.style.display = 'none';
+            imageBox.hide();
         }
         
         
         
         
         var questionBox = QuestionBox();
+        
+        var imageBox = ImageBox();
         
         var answerBoxes = [0,1,2,3].map(function(i) { return AnswerBox(i); })
         
@@ -331,7 +363,8 @@ var Millionaire = (function() {
         }
         
         return {
-            intro:intro
+            intro:intro,
+            hide:hide
         };
     }
     
@@ -376,6 +409,9 @@ var Millionaire = (function() {
                 return false;
             }
         }
+        var currentQuestion = function() {
+                return questions[current];
+        }
         
         var isLastQuestion = function() {
             if(questions[current+1]) {
@@ -392,6 +428,7 @@ var Millionaire = (function() {
         return {
             isLastQuestion:isLastQuestion,
             nextQuestion:nextQuestion,
+            currentQuestion:currentQuestion,
             getCurrentIndex:getCurrentIndex
         };
     }
@@ -444,6 +481,18 @@ var Millionaire = (function() {
         }
     }
     
+    var previous = function() {
+        if(standBy) {
+            standBy = false;
+            question.show();
+            SoundManager.play('transition',function() {
+                SoundManager.loop('background');
+            });
+            question.loadQuestion(qdm.currentQuestion());
+            
+        }
+    }
+    
     var right = function() {
         question.right(function() {
             next()
@@ -457,10 +506,16 @@ var Millionaire = (function() {
         question.showNext();
     }
     
+    var showPrevious = function() {
+        question.showPrevious();
+    }
+    
     var start = function() {
-        sigla.intro(function() {
+        /*sigla.intro(function() {
             next();
-        });
+        });*/
+        sigla.hide();
+        next();
     }
     
     var keyDispatcher = function(e) {
@@ -478,6 +533,7 @@ var Millionaire = (function() {
             case 39: next(); break; //freccia destra
             
             case 40: showNext(); break; //freccia giù
+            case 37: previous(); break; //freccia sinistra
                 
             case 70: main.toggleCamera(); break; //f
             
