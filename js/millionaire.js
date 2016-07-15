@@ -480,7 +480,7 @@ var Millionaire = (function() {
         if(qdm.isLastQuestion()) {
             SoundManager.play('wins',function() {
                 SoundManager.play('dio',function() {
-                    sigla.outro();
+                    if(options.outro) sigla.outro();
                 });
             });
             return;
