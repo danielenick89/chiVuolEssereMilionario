@@ -7,7 +7,7 @@
 
 var Millionaire = (function() {
 
-    var main,recap,question,sigla,logo,qdm,CAMERA_ID=0;
+    var main,recap,question,sigla,logo,qdm,CAMERA_ID=0,options;
 
     var setCameraID = function(id) {
       CAMERA_ID = id;
@@ -452,7 +452,7 @@ var Millionaire = (function() {
 
 
 
-    var init = function(questions, mainContainer, recapContainer, questionContainer, siglaContainer, logoContainer) {
+    var init = function(questions, mainContainer, recapContainer, questionContainer, siglaContainer, logoContainer,opts) {
 
         logo = LogoManager(logoContainer);
         main = MainManager(mainContainer,logo);
@@ -461,6 +461,8 @@ var Millionaire = (function() {
         sigla = SiglaManager(siglaContainer);
 
         qdm = QuestionsDataManager(questions);
+
+        options = opts || {};
     }
 
     var standBy = false;
@@ -529,11 +531,14 @@ var Millionaire = (function() {
     }
 
     var start = function() {
-        /*sigla.intro(function() {
+      if(options.intro) {
+        sigla.intro(function() {
             next();
-        });*/
+        });
+      } else {
         sigla.hide();
         next();
+      }
     }
 
     var keyDispatcher = function(e) {
