@@ -17,7 +17,7 @@ KEYS to control the app:
 - [P]           Psycho mode: flashing camera
 
 After an answer is set to wrong, another one can be selected if desired.
-##Question structures
+##Questions structure
 Sample question:
 {
   question: "Chi era il primo ministro italiano nel lontano 1994?",
