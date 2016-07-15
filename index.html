@@ -20,13 +20,13 @@ and open the template in the editor.
         <img class="logo" src="img/logo.png"/>
         <script src="js/millionaire.js"></script>
         <script>
-            
+
             var s = document.getElementsByClassName('sigla-overlay')[0]
             var m = document.getElementsByClassName('main-container')[0]
             var q = document.getElementsByClassName('questions-overlay')[0]
             var r = document.getElementsByClassName('recap-panel')[0]
             var l = document.getElementsByClassName('logo')[0]
-            
+
             var questions = [
                 {question: "Chi era il primo ministro italiano nel lontano 1994?", options: ["Silvio","Berlusconi","Silvio Berlusconi Berlusconi Berlusconi Berlusconi Berlusconi","Il Cavaliere"],image:"img/logo.png"},
                 {question: "Chi è stato il capocannoniere dei mondiali 1990?", options: ["Roberto Baggio","Giovanni Trapattoni","Rudi Voeller","Toto' Schillaci"]},
@@ -47,9 +47,10 @@ and open the template in the editor.
                 {question: "Quando ti arrabbi qual è la prima cosa a cui pensi?", options: ["Devo bere","Ndeme via","Sbrego una bici","Porco dio"]},
                 {question: "Quale delle seguenti cose preferisci?", options: ["La figa","Un ciccio","Melanzane sott'olio","Far schemi"]},
             ];
-            
+
+            //Millionaire.setCameraID(1) sets second camera (if you're using an external camera on a laptop or whatever)
             Millionaire.init(questions,m,r,q,s,l);
-            
+
         </script>
     </body>
 </html>
