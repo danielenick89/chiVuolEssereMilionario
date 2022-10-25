@@ -4,7 +4,7 @@ This is an interactive implementation of the tv show Who wants to be a Billionai
 
 Questions are placed as a js object in the index.html file.
 
-##Controls
+## Controls
 
 KEYS to control the app:
 
@@ -17,7 +17,7 @@ KEYS to control the app:
 - [P]           Psycho mode: flashing camera
 
 After an answer is set to wrong, another one can be selected if desired.
-##Questions structure
+## Questions structure
 Sample question:
 {
   question: "Chi era il primo ministro italiano nel lontano 1994?",
@@ -30,7 +30,7 @@ Sample question:
   image:"img/logo.png"
 }
 
-##Additional infos
+## Additional infos
 
 The `image` parameter can be omitted.
 
